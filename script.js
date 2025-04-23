@@ -13,16 +13,17 @@ function Book(title, author, pages, read, id) {
     this.id = id;
 
     this.info = function() {
-      return `${title} by ${author}, ${pages} pages, ${read}, ${id}`;
+      return `${this.title} by ${this.author}, ${this.pages}, ${this.read}, ${this.id}`;
     }
 }
 
- Book.prototype.addBookToLibrary = function( title, author, pages, read )  {
+function addBookToLibrary( title, author, pages, read )  {
     
     const id = crypto.randomUUID();  // unique id for each book  
     const book = new Book(title, author, pages, read, id);
     myLibrary.push(book);
+    console.log(book.info());
 } 
 
-//Book.prototype.addBookToLibrary("The Hobbit", "J.R.R. Tolkien", 295, "not yet");
+addBookToLibrary("The Hobbit", "J.R.R. Tolkien", 295, "not yet");
 //console.log(myLibrary);
