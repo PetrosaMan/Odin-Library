@@ -4,6 +4,6 @@
     padding: 0;
 }
 
-#bookForm {
-   opacity: 1;     
+#book-form {
+   opacity: 0;     
 }
