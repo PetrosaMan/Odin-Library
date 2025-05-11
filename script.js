@@ -32,17 +32,41 @@ function addBookToLibrary( title, author, pages, read )  {
     
     const id = crypto.randomUUID();  // unique id for each book  
     const book = new Book(title, author, pages, read, id);
-    myLibrary.push(book);
-    console.log(book);
+    myLibrary.push(book);    
+    // Call funtion to update the display
+    displayBooks();
 } 
+
+function displayBooks() {
+  // Clear existing book entries before re-rendering
+    const bookContainer = document.getElementById("book-container");
+    bookContainer.innerHTML = "";
+
+    myLibrary.forEach(book => {
+        const articleElement = document.createElement("article");
+        articleElement.dataset.id = book.id;
+        articleElement.className = "book";
+        
+        articleElement.innerHTML = `
+            <h2>title: ${book.title}</h2>
+            <p>author: ${book.author}</p>
+            <p>pages: ${book.pages}</p>
+            <p>read: ${book.read}</p>
+            <button class="delete-book" type="button">delete book</button>
+        `;        
+        bookContainer.appendChild(articleElement);  
+    });
+}
+
+// Ensure displayBooks is triggered at page load too.
+document.addEventListener("DOMContentLoaded", displayBooks);
+
 
 const showForm = document.getElementById('add-book');
 showForm.addEventListener('click', () => {
     const addBook = document.getElementById('book-form');
     addBook.style.opacity = 1;
 });
-
-
 
 const form = document.getElementById('book-form');
 form.addEventListener('submit', (event) => {
@@ -53,7 +77,8 @@ form.addEventListener('submit', (event) => {
     const read = document.getElementById('read').value;
 
     document.getElementById("book-form").reset();  
-    addBookToLibrary(title, author, pages, read); 
+    addBookToLibrary(title, author, pages, read);
+    form.style.opacity = 0; 
 });
 
 
