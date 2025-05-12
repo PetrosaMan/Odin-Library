@@ -109,8 +109,16 @@ form.addEventListener("submit", (event) => {
   const author = document.getElementById("author").value;
   const pages = document.getElementById("pages").value;
   const read = document.getElementById("read").value;
-
-  document.getElementById("book-form").reset();
   addBookToLibrary(title, author, pages, read);
+
+  //Reset form fields after submission and hide the form
+  document.getElementById("book-form").reset();  
   form.style.opacity = 0;
+});
+
+document.getElementById("book-container").addEventListener("click", (event) => {
+  if (event.target.classList.contains("delete-book")) {
+    console.log('Button clicked'); 
+    console.log("Event target classList", event.target.classList);   
+  }
 });
