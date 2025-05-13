@@ -67,7 +67,8 @@ function addBookToLibrary(title, author, pages, read) {
   const book = new Book(title, author, pages, read, id);
   myLibrary.push(book);
   // Call funtion to update the display
-  displayBooks();  
+  document.getElementById("book-form").reset();
+  displayBooks();
 }
 
 function displayBooks() {
@@ -89,8 +90,7 @@ function displayBooks() {
             <button class="toggle-read" type="button">Toggle Read Status</button>
         `;
     bookContainer.appendChild(articleElement);
-  });
-  console.log(myLibrary);
+  });  
 }
 
 // Ensure displayBooks is triggered at page load too.
@@ -99,7 +99,7 @@ document.addEventListener("DOMContentLoaded", displayBooks);
 const showForm = document.getElementById("add-book");
 showForm.addEventListener("click", () => {
   const addBook = document.getElementById("book-form");
-  addBook.style.opacity = 1;
+  addBook.style.opacity = 1;   
 });
 
 const form = document.getElementById("book-form");
@@ -112,13 +112,26 @@ form.addEventListener("submit", (event) => {
   addBookToLibrary(title, author, pages, read);
 
   //Reset form fields after submission and hide the form
-  document.getElementById("book-form").reset();  
+  document.getElementById("book-form").reset();
   form.style.opacity = 0;
 });
 
 document.getElementById("book-container").addEventListener("click", (event) => {
   if (event.target.classList.contains("delete-book")) {
-    console.log('Button clicked'); 
-    console.log("Event target classList", event.target.classList);   
+    const bookArticleElement = event.target.closest("article");
+
+    if (bookArticleElement && bookArticleElement.dataset.id) {
+      const bookIdToDelete = bookArticleElement.dataset.id;
+
+      // Find the index of the book to delete in myLibrary
+      const bookIndex = myLibrary.findIndex(
+        (book) => book.id === bookIdToDelete
+      );
+      if (bookIndex !== -1) {
+        // Remove the book from myLibrary
+        myLibrary.splice(bookIndex, 1); // remove the book from array
+        displayBooks(); // Re-render the library display
+      }
+    }
   }
 });
