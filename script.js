@@ -1,4 +1,6 @@
 const myLibrary = [
+  /*Test data for myLibrary*/
+
   new Book(
     "The Hobbit",
     "J.R.R. Tolkien",
@@ -85,9 +87,10 @@ function displayBooks() {
             <h2>title: ${book.title}</h2>
             <p>author: ${book.author}</p>
             <p>pages: ${book.pages}</p>
-            <p>read: ${book.read}</p>            
+            <p>read: ${book.read}</p>
+            <p>id: ${book.id}</p>            
             <button class="delete-book" type="button">delete book</button>
-            <button class="toggle-read" type="button">Toggle Read Status</button>
+            <button class="toggle-read" type="button">read status</button>
         `;
     bookContainer.appendChild(articleElement);
   });  
