@@ -4,6 +4,33 @@
     padding: 0;
 }
 
+.header {
+    display:flex;
+    flex-direction: column; 
+    justify-content: center;    
+    align-items: center;
+    gap: 15px;
+    font-size: 25px;
+    font-weight: bold;
+    margin-top: 20px;
+    border-bottom: 2px solid black;
+    padding: 20px;    
+    position: sticky;
+    top: 0;
+    background-color: #ccffd9;
+}
+
+#add-book {
+    text-align: center;
+    font-size: 1rem;
+    margin-top: 1rem; 
+    width: 100px;   
+}
+
+.add-book {
+    text-align: center;
+}
+
 p {
     font-size: 1.2rem;
 }
@@ -13,9 +40,8 @@ body{
 }
 
 #book-form {
-   font-size: 1.2rem;   
-    /* opacity: 0; */
-   opacity: 1;   
+   font-size: 1.2rem;
+   background-color: #ccffd9;      
 }
 
 #book-form input {
@@ -24,15 +50,7 @@ body{
     border-radius: 6px; 
     font-size: 1rem;
     width: 200px; 
-    padding: 3px;
-}
-
-#add-book {
-    margin: 5px; 
-    border: 1px solid black;   
-    border-radius: 4px; 
-    width: 100px; 
-    padding: 5px;
+    padding: 3px;      
 }
 
 #submit{
@@ -45,16 +63,14 @@ body{
 
 .book {    
     display: flex;
-    flex-direction: column;
-    background-color: #d9ffcc;
+    flex-direction: column;    
     border: 1px solid #ccc;
     border-radius: 10px;
     margin: 20px;
     padding: 20px;
     width: 400px; 
-    background-color: #ccffd9;  
+    background-color: #ccffd9; 
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-
 }
 
 .delete-book {
@@ -71,4 +87,20 @@ body{
     border-radius: 4px;
     width: 100px; 
     padding: 5px;
+}
+
+dialog {    
+    background-color: #ccffd9;    
+    margin-left: 25%;
+    margin-right: 25%;
+    margin-top: 25%;      
+    width: 400px;
+    padding: 20px;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+dialog::backdrop {
+    background-color: #555151cc;
 }

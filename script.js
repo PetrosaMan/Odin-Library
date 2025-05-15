@@ -100,10 +100,22 @@ function displayBooks() {
 document.addEventListener("DOMContentLoaded", displayBooks);
 
 const showForm = document.getElementById("add-book");
-showForm.addEventListener("click", () => {
-  const addBook = document.getElementById("book-form");
-  addBook.style.opacity = 1;   
-});
+console.log("Initial 'add-book' button selection", showForm); // for completeness
+
+const dialog = document.querySelector(".dialog"); //Get the dialog here
+ 
+if (showForm) {
+  showForm.addEventListener("click", () => {    
+    if (dialog && typeof dialog.showModal === 'function') {
+      dialog.showModal(); // Show the dialog as modal      
+    } else {
+      console.error("Dialog element is not found or does not have a showModal method.", dialog);
+    }
+  });
+} else {
+  console.error("'add-book' button not found.");
+}
+
 
 const form = document.getElementById("book-form");
 form.addEventListener("submit", (event) => {
@@ -113,10 +125,9 @@ form.addEventListener("submit", (event) => {
   const pages = document.getElementById("pages").value;
   const read = document.getElementById("read").value;
   addBookToLibrary(title, author, pages, read);
-
+  dialog.close(); // Close the dialog
   //Reset form fields after submission and hide the form
-  document.getElementById("book-form").reset();
-  form.style.opacity = 0;
+  document.getElementById("book-form").reset();  
 });
 
 document.getElementById("book-container").addEventListener("click", (event) => {
@@ -138,3 +149,7 @@ document.getElementById("book-container").addEventListener("click", (event) => {
     }
   }
 });
+
+
+
+
