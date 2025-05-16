@@ -11,9 +11,8 @@
     align-items: center;
     gap: 15px;
     font-size: 25px;
-    font-weight: bold;
-    margin-top: 20px;
-    border-bottom: 2px solid black;
+    font-weight: bold;    
+    border-bottom: 2px solid brown;
     padding: 20px;    
     position: sticky;
     top: 0;
@@ -24,11 +23,17 @@
     text-align: center;
     font-size: 1rem;
     margin-top: 1rem; 
-    width: 100px;   
+    width: 100px;
+    background-color: #e2f9e2;
+    border-radius: 8px;
+    padding: 5px;
+    color: brown;
+    border: 2px solid brown;    
 }
 
 .add-book {
-    text-align: center;
+    text-align: center;   
+    font-size: 1.2rem;
 }
 
 p {
@@ -37,6 +42,7 @@ p {
 
 body{
     background-color: #ecffe6;
+    color: brown;
 }
 
 #book-form {
@@ -50,7 +56,8 @@ body{
     border-radius: 6px; 
     font-size: 1rem;
     width: 200px; 
-    padding: 3px;      
+    padding: 3px;
+    background-color: #e2f9e2;     
 }
 
 #submit{
@@ -59,34 +66,37 @@ body{
     border-radius: 4px; 
     width: 100px; 
     padding: 5px;
+    background-color: #e2f9e2;
 }
 
 .book {    
     display: flex;
     flex-direction: column;    
     border: 1px solid #ccc;
-    border-radius: 10px;
-    margin: 20px;
+    border-radius: 10px;    
     padding: 20px;
     width: 400px; 
     background-color: #ccffd9; 
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.delete-book {
-    margin: 5px; 
-    border: 1px solid black;   
-    border-radius: 4px; 
-    width: 100px; 
-    padding: 5px;
+#book-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
 }
 
-.toggle-read {
-    margin: 5px;
-    border: 1px solid black; 
-    border-radius: 4px;
+.delete-book, .toggle-read {
+    margin: 5px; 
+    border: 2px solid brown;  
+    border-radius: 8px; 
     width: 100px; 
     padding: 5px;
+    background-color: #e2f9e2;
+    color: brown;
 }
 
 dialog {    
@@ -102,5 +112,14 @@ dialog {
 }
 
 dialog::backdrop {
-    background-color: #555151cc;
+    background-color: #e6e0e0cc;   
 }
+
+.card-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 60px;
+    margin-top: 10px;    
+}
+

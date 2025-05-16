@@ -49,15 +49,18 @@ function Book(title, author, pages, read, id) {
 }
 
 Book.prototype.toggleReadStatus = function () {
+  console.log("Read status clicked");
   this.read = this.read === "yes" ? "no" : "yes";
   displayBooks();
 };
 
 document.addEventListener("click", (event) => {
-  if (event.target.classList.contains("toggle-read")) {
+  if (event.target.classList.contains("toggle-read")) {    
     const bookId = event.target.parentElement.dataset.id;
     const book = myLibrary.find((b) => b.id === bookId);
+    console.log("book: ", book);
     if (book) {
+      console.log("toggleReadsStatus called");
       book.toggleReadStatus();
       displayBooks(); // Refresh book display changes
     }
@@ -84,16 +87,16 @@ function displayBooks() {
     articleElement.className = "book";
 
     articleElement.innerHTML = `
-            <h2>title: ${book.title}</h2>
-            <p>author: ${book.author}</p>
-            <p>pages: ${book.pages}</p>
-            <p>read: ${book.read}</p>
-            <p>id: ${book.id}</p>            
-            <button class="delete-book" type="button">delete book</button>
-            <button class="toggle-read" type="button">read status</button>
-        `;
+      <h2>title: ${book.title}</h2>
+      <p>author: ${book.author}</p>
+      <p>pages: ${book.pages}</p>
+      <p>read: ${book.read}</p>
+      <p>id: ${book.id}</p>                       
+      <button class="delete-book" type="button">delete book</button>
+      <button class="toggle-read" type="button">read status</button>            
+      `;
     bookContainer.appendChild(articleElement);
-  });  
+  });
 }
 
 // Ensure displayBooks is triggered at page load too.
@@ -103,19 +106,21 @@ const showForm = document.getElementById("add-book");
 console.log("Initial 'add-book' button selection", showForm); // for completeness
 
 const dialog = document.querySelector(".dialog"); //Get the dialog here
- 
+
 if (showForm) {
-  showForm.addEventListener("click", () => {    
-    if (dialog && typeof dialog.showModal === 'function') {
-      dialog.showModal(); // Show the dialog as modal      
+  showForm.addEventListener("click", () => {
+    if (dialog && typeof dialog.showModal === "function") {
+      dialog.showModal(); // Show the dialog as modal
     } else {
-      console.error("Dialog element is not found or does not have a showModal method.", dialog);
+      console.error(
+        "Dialog element is not found or does not have a showModal method.",
+        dialog
+      );
     }
   });
 } else {
   console.error("'add-book' button not found.");
 }
-
 
 const form = document.getElementById("book-form");
 form.addEventListener("submit", (event) => {
@@ -127,7 +132,7 @@ form.addEventListener("submit", (event) => {
   addBookToLibrary(title, author, pages, read);
   dialog.close(); // Close the dialog
   //Reset form fields after submission and hide the form
-  document.getElementById("book-form").reset();  
+  document.getElementById("book-form").reset();
 });
 
 document.getElementById("book-container").addEventListener("click", (event) => {
@@ -149,7 +154,3 @@ document.getElementById("book-container").addEventListener("click", (event) => {
     }
   }
 });
-
-
-
-
