@@ -55,17 +55,18 @@ Book.prototype.toggleReadStatus = function () {
 };
 
 document.addEventListener("click", (event) => {
-  if (event.target.classList.contains("toggle-read")) {    
-    const bookId = event.target.parentElement.dataset.id;
-    const book = myLibrary.find((b) => b.id === bookId);
+  if (event.target.classList.contains("toggle-read")) {     
+    const bookArticle = event.target.closest("article");     
+    if (!bookArticle) return; // Guard clause in case the article isn't found    
+    const bookId = bookArticle.dataset.id;    
+    const book = myLibrary.find((b)=> b.id === bookId);
     console.log("book: ", book);
-    if (book) {
-      console.log("toggleReadsStatus called");
-      book.toggleReadStatus();
-      displayBooks(); // Refresh book display changes
+    if(book) {
+      console.log("toggleReadStatus called");
+      book.toggleReadStatus();      
     }
   }
-});
+});      
 
 function addBookToLibrary(title, author, pages, read) {
   const id = crypto.randomUUID(); // unique id for each book
@@ -91,9 +92,11 @@ function displayBooks() {
       <p>author: ${book.author}</p>
       <p>pages: ${book.pages}</p>
       <p>read: ${book.read}</p>
-      <p>id: ${book.id}</p>                       
-      <button class="delete-book" type="button">delete book</button>
-      <button class="toggle-read" type="button">read status</button>            
+      <p>id:${book.id}</p>
+      <div class="button-group">
+        <button class="delete-book" type="button">delete book</button>
+        <button class="toggle-read" type="button">read status</button>        
+      </div>
       `;
     bookContainer.appendChild(articleElement);
   });
@@ -128,7 +131,11 @@ form.addEventListener("submit", (event) => {
   const title = document.getElementById("title").value;
   const author = document.getElementById("author").value;
   const pages = document.getElementById("pages").value;
-  const read = document.getElementById("read").value;
+  const read = document.getElementById("read").value  
+  if (read !== "yes" && read !== "no") {
+    alert("Your input for 'read' must be 'yes' or 'no'.");
+    return;   
+  }
   addBookToLibrary(title, author, pages, read);
   dialog.close(); // Close the dialog
   //Reset form fields after submission and hide the form
