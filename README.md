@@ -1,41 +1,21 @@
-const myLibrary = [
-  /*Test data for myLibrary*/
+The following code is for the constructor function and the prototype function:
 
-  new Book(
-    "The Battle of Nowhere",
-    "J.R.K. Thorman",
-    295,
-    "no",
-    "fb9d7b37-1322-4493-b149-351b554a9574"
-  ),
-  new Book(
-    "The Legend",
-    "D.H. Smith",
-    395,
-    "yes",
-    "3564e844-8549-4814-b009-3ad445c218c5"
-  ),
-  new Book(
-    "The Rocket",
-    "R.L. Brown",
-    274,
-    "no",
-    "af7278bc-9809-42bc-93c9-bc7765344378"
-  ),
-  new Book(
-    "The Lost Planet",
-    "M.S. Jones",
-    382,
-    "yes",
-    "75102e01-41ec-4966-85d9-7a93bf3d0af3"
-  ),
-];
+The constructor function creates a Book object instance when called with `new`. The constructor function is called from the addBookToLibrary() function
 
-// Constructor function
-function Book(title, author, pages, read, id) {  
+```
+const book = new Book(title, author, pages, read, id);
+```
+
+
+The `Book.prototype.toggleReadStatus()`  method is used to toggle the read status (yes / no) from the `read status` button on all book instances. This saves memory because all book instances use this method 
+
+```
+function Book(title, author, pages, read, id) {
+  // the constructor...
   if (!new.target) {
     throw Error("You must use the 'new' operator to call the constructor");
   }
+
   this.title = title;
   this.author = author;
   this.pages = pages;
@@ -46,17 +26,43 @@ function Book(title, author, pages, read, id) {
     return `${this.title} by ${this.author}, ${this.pages}, ${this.read}, ${this.id}`;
   };
 }
-// toggle read status of a book
+
 Book.prototype.toggleReadStatus = function () {
   console.log("Read status clicked");
   this.read = this.read === "yes" ? "no" : "yes";
   displayBooks();
 };
 
-//
+```
+
+The addBookToLibrary() function calls the constructor function to create an instance of Book, and creates a random number bookId from crypto.randomUUID() function. The new book instance together with it's **random id** are pushed to the myLibrary objects array of books,  the book-form is reset and the `displayBooks()` function is called to update the display of the library of books.
+
+```
+function addBookToLibrary(title, author, pages, read) {
+  const id = crypto.randomUUID(); // unique id for each book
+  const book = new Book(title, author, pages, read, id);
+  myLibrary.push(book);
+  // Call funtion to update the display
+  document.getElementById("book-form").reset();
+  displayBooks();
+}
+```
+
+```
+this.info = function () {
+  return `${this.title} by ${this.author}, ${this.pages}, 
+  ${this.read}, ${this.id}`;
+};
+
+```
+
+The **info method** is a function which can be used to return all data fields in a book object. Each instance of book has it's own info method. This uses more system memory than a prototype method.
+
+```
 document.addEventListener("click", (event) => {
+  console.log(event);
   if (event.target.classList.contains("toggle-read")) {     
-    const bookArticle = event.target.closest("article");         
+    const bookArticle = event.target.closest("article");     
     if (!bookArticle) return; // Guard clause in case the article isn't found    
     const bookId = bookArticle.dataset.id;    
     const book = myLibrary.find((b)=> b.id === bookId);
@@ -66,20 +72,23 @@ document.addEventListener("click", (event) => {
       book.toggleReadStatus();      
     }
   }
-});      
+});
 
-function addBookToLibrary(title, author, pages, read) {
-  const id = crypto.randomUUID(); // unique id for each book
-  const book = new Book(title, author, pages, read, id);
-  myLibrary.push(book);
-  // Call funtion to update the display
-  document.getElementById("book-form").reset();
-  displayBooks();
-}
+```
 
-function displayBooks() {
-  // Clear existing book entries before re-rendering
-  const bookContainer = document.getElementById("book-container");
+The delete book and read status buttons are enclosed inside
+`<div></div>` tags to display them side by side using flexbox.
+The `data-id` number of the `read status` and `delete book` buttons
+are in the `article tags`, so the `parent tags` are div.button group.
+So to get the **id** numbers we use: 
+`event.target.closest("article")`  as the `event.target.parent()` does not work
+
+**function: displayBooks**
+
+```
+function displayBooks() {  
+  const bookContainer = document.getElementById("book-container"); grab the book-container
+// Clear existing book entries before re-rendering
   bookContainer.innerHTML = "";
 
   myLibrary.forEach((book) => {
@@ -100,14 +109,25 @@ function displayBooks() {
       `;
     bookContainer.appendChild(articleElement);
   });
-}
+
+```
+
+The displayBooks() function uses a forEach loop to create the book data fields on the browser and fill in the data per book for all book objects in the myBooks array of objects and append each book to the books container.
+
+```
 
 // Ensure displayBooks is triggered at page load too.
 document.addEventListener("DOMContentLoaded", displayBooks);
 
+```
+
+```
 const showForm = document.getElementById("add-book");
 //console.log("Initial 'add-book' button selection", showForm); // for completeness
 
+```
+
+```
 const dialog = document.querySelector(".dialog"); //Get the dialog here
 
 // show add book form modal
@@ -126,6 +146,9 @@ if (showForm) {
   console.error("'add-book' button not found.");
 }
 
+```
+
+```
 // Handle form submission
 const form = document.getElementById("book-form");
 form.addEventListener("submit", (event) => {
@@ -144,6 +167,9 @@ form.addEventListener("submit", (event) => {
   document.getElementById("book-form").reset();
 });
 
+```
+
+```
 // Delete a book from the library
 document.getElementById("book-container").addEventListener("click", (event) => {
   if (event.target.classList.contains("delete-book")) {
@@ -164,3 +190,5 @@ document.getElementById("book-container").addEventListener("click", (event) => {
     }
   }
 });
+
+```
