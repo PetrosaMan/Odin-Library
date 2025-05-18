@@ -2,8 +2,8 @@ const myLibrary = [
   /*Test data for myLibrary*/
 
   new Book(
-    "The Hobbit",
-    "J.R.R. Tolkien",
+    "The Battle of Nowhere",
+    "J.R.K. Thorman",
     295,
     "no",
     "fb9d7b37-1322-4493-b149-351b554a9574"
