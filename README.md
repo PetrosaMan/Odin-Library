@@ -20,11 +20,7 @@ function Book(title, author, pages, read, id) {
   this.author = author;
   this.pages = pages;
   this.read = read;
-  this.id = id;
-
-  this.info = function () {
-    return `${this.title} by ${this.author}, ${this.pages}, ${this.read}, ${this.id}`;
-  };
+  this.id = id;  
 }
 
 Book.prototype.toggleReadStatus = function () {
@@ -49,24 +45,12 @@ function addBookToLibrary(title, author, pages, read) {
 ```
 
 ```
-this.info = function () {
-  return `${this.title} by ${this.author}, ${this.pages}, 
-  ${this.read}, ${this.id}`;
-};
-
-```
-
-The **info method** is a function which can be used to return all data fields in a book object. Each instance of book has it's own info method. This uses more system memory than a prototype method.
-
-```
-document.addEventListener("click", (event) => {
-  console.log(event);
+document.addEventListener("click", (event) => { 
   if (event.target.classList.contains("toggle-read")) {     
     const bookArticle = event.target.closest("article");     
     if (!bookArticle) return; // Guard clause in case the article isn't found    
     const bookId = bookArticle.dataset.id;    
-    const book = myLibrary.find((b)=> b.id === bookId);
-    console.log("book: ", book);
+    const book = myLibrary.find((b)=> b.id === bookId);    
     if(book) {
       console.log("toggleReadStatus called");
       book.toggleReadStatus();      

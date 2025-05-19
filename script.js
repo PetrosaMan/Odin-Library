@@ -1,6 +1,7 @@
 const myLibrary = [
-  /*Test data for myLibrary*/
-
+  /* Test data for myLibrary */
+  /* All new books are appended to myLibrary
+  /* Delete test data before real books data entered */
   new Book(
     "The Battle of Nowhere",
     "J.R.K. Thorman",
@@ -34,65 +35,61 @@ const myLibrary = [
 // Constructor function
 function Book(title, author, pages, read, id) {  
   if (!new.target) {
-    throw Error("You must use the 'new' operator to call the constructor");
+    throw Error("You must use the 'new' operator");
   }
   this.title = title;
   this.author = author;
   this.pages = pages;
   this.read = read;
-  this.id = id;
-
-  this.info = function () {
-    return `${this.title} by ${this.author}, ${this.pages}, ${this.read}, ${this.id}`;
-  };
+  this.id = id;  
 }
 // toggle read status of a book
-Book.prototype.toggleReadStatus = function () {
-  console.log("Read status clicked");
-  this.read = this.read === "yes" ? "no" : "yes";
+Book.prototype.toggleReadStatus = function () {  
+  if (this.read == "yes") {
+     this.read = "no";
+    } else {
+     this.read = "yes" ;
+  }     
   displayBooks();
-};
-
-//
-document.addEventListener("click", (event) => {
-  if (event.target.classList.contains("toggle-read")) {     
-    const bookArticle = event.target.closest("article");         
-    if (!bookArticle) return; // Guard clause in case the article isn't found    
-    const bookId = bookArticle.dataset.id;    
-    const book = myLibrary.find((b)=> b.id === bookId);
-    console.log("book: ", book);
-    if(book) {
-      console.log("toggleReadStatus called");
-      book.toggleReadStatus();      
-    }
-  }
-});      
+}; 
 
 function addBookToLibrary(title, author, pages, read) {
   const id = crypto.randomUUID(); // unique id for each book
   const book = new Book(title, author, pages, read, id);
   myLibrary.push(book);
-  // Call funtion to update the display
+  // Call function to update the display
   document.getElementById("book-form").reset();
   displayBooks();
 }
+
+document.addEventListener("click", (event) => {
+  if (event.target.classList.contains("toggle-read")) {     
+    const bookArticle = event.target.closest("article");         
+    if (!bookArticle) return; // Guard clause in case the article isn't found    
+    const bookId = bookArticle.dataset.id;    
+    const book = myLibrary.find((b)=> b.id === bookId);    
+    if(book) {     
+      book.toggleReadStatus();      
+    }
+  }
+});
 
 function displayBooks() {
   // Clear existing book entries before re-rendering
   const bookContainer = document.getElementById("book-container");
   bookContainer.innerHTML = "";
 
-  myLibrary.forEach((book) => {
+  myLibrary.forEach( function(book) {       
     const articleElement = document.createElement("article");
     articleElement.dataset.id = book.id;
-    articleElement.className = "book";
-
+    articleElement.className = "book";    
+   
     articleElement.innerHTML = `
       <h2>title: ${book.title}</h2>
       <p>author: ${book.author}</p>
-      <p>pages: ${book.pages}</p>
+      <p>pages: ${book.pages} pages</p>
       <p>read: ${book.read}</p>
-      <p>id:${book.id}</p>
+      <p>id: ${book.id}</p>
       <div class="button-group">
         <button class="delete-book" type="button">delete book</button>
         <button class="toggle-read" type="button">read status</button>        
@@ -106,7 +103,6 @@ function displayBooks() {
 document.addEventListener("DOMContentLoaded", displayBooks);
 
 const showForm = document.getElementById("add-book");
-//console.log("Initial 'add-book' button selection", showForm); // for completeness
 
 const dialog = document.querySelector(".dialog"); //Get the dialog here
 
@@ -133,15 +129,14 @@ form.addEventListener("submit", (event) => {
   const title = document.getElementById("title").value;
   const author = document.getElementById("author").value;
   const pages = document.getElementById("pages").value;
-  const read = document.getElementById("read").value  
-  if (read !== "yes" && read !== "no") {
+  const readValue = document.getElementById("read").value  
+  if (readValue !== "yes" && readValue !== "no") {
     alert("Your input for 'read' must be 'yes' or 'no'.");
     return;   
   }
-  addBookToLibrary(title, author, pages, read);
-  dialog.close(); // Close the dialog
-  //Reset form fields after submission and hide the form
-  document.getElementById("book-form").reset();
+  //const readBoolean = readValue === "yes"; 
+  addBookToLibrary(title, author, pages, readValue/*readBoolean*/);
+  dialog.close(); // Close the dialog  
 });
 
 // Delete a book from the library
@@ -164,3 +159,6 @@ document.getElementById("book-container").addEventListener("click", (event) => {
     }
   }
 });
+
+
+
